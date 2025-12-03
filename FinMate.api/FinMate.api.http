@@ -1,0 +1,6 @@
+@FinMate.api_HostAddress = http://localhost:5223
+
+GET {{FinMate.api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
