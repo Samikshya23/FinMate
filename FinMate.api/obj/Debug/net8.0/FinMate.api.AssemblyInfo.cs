@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FinMate.api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2709d3a644f0f39e52df519b6b8d68e9d1f37924")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33e8c2a2b44ab1b7a999807f182402b33a629d46")]
 [assembly: System.Reflection.AssemblyProductAttribute("FinMate.api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FinMate.api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
