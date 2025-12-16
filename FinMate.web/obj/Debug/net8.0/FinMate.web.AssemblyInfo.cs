@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FinMate.web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2709d3a644f0f39e52df519b6b8d68e9d1f37924")]
 [assembly: System.Reflection.AssemblyProductAttribute("FinMate.web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FinMate.web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Verify Reset Code";
+    Layout = "~/Views/Shared/_LandingLayout.cshtml";
+    var email = (ViewBag.Email as string) ?? "";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="bg-white rounded-4 shadow-sm p-4 p-md-5">
+                <h2 class="fw-bold mb-1">Verify Reset Code</h2>
+                <p class="text-secondary mb-4">
+                    We sent a reset code to your Gmail. Paste it below to continue.
+                </p>
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success">@TempData["Success"]</div>
+                }
+
+                <form method="post" asp-action="VerifyResetCode">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email</label>
+                        <input class="form-control form-control-lg" name="email" value="@email" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Reset Code / Token</label>
+                        <input class="form-control form-control-lg" name="token"
+                               placeholder="Paste code from Gmail" required />
+                    </div>
+
+                    <button class="btn btn-brand w-100" type="submit">Continue</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <a asp-controller="Auth" asp-action="ForgotPassword"
+                       class="text-decoration-none fw-semibold">
+                        Resend code
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

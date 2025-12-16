@@ -1,0 +1,114 @@
+﻿@model FinMate.web.Models.IncomesIndexVm
+@{
+    ViewData["Title"] = "Incomes";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="fw-bold mb-0">Incomes</h1>
+            <div class="text-secondary">Add and view your incomes (private)</div>
+        </div>
+        <a class="btn btn-outline-secondary" asp-controller="Dashboard" asp-action="Index">Back to Dashboard</a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-warning">@ViewBag.Error</div>
+    }
+
+    <div class="row g-4">
+        <!-- Add Income Form -->
+        <div class="col-lg-4">
+            <div class="bg-white rounded-4 shadow-sm p-4">
+                <h5 class="fw-bold mb-3">Add Income</h5>
+
+                <form asp-action="Add" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label">Source</label>
+                        <input asp-for="Form.Source" class="form-control" placeholder="Salary / Freelance / Cash" />
+                        <span asp-validation-for="Form.Source" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Amount</label>
+                        <input asp-for="Form.Amount" class="form-control" type="number" step="0.01" />
+                        <span asp-validation-for="Form.Amount" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Date</label>
+                        <input asp-for="Form.Date" class="form-control" type="date" />
+                        <span asp-validation-for="Form.Date" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <input asp-for="Form.Category" class="form-control" placeholder="Job / Business / Other" />
+                        <span asp-validation-for="Form.Category" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Note (optional)</label>
+                        <textarea asp-for="Form.Note" class="form-control" rows="2" placeholder="Any note..."></textarea>
+                    </div>
+
+                    <button class="btn btn-primary w-100">Save Income</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Income List -->
+        <div class="col-lg-8">
+            <div class="bg-white rounded-4 shadow-sm p-4">
+                <h5 class="fw-bold mb-3">Income History</h5>
+
+                @if (Model.Items == null || Model.Items.Count == 0)
+                {
+                    <div class="text-secondary">No incomes yet. Add your first income.</div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Source</th>
+                                    <th>Category</th>
+                                    <th class="text-end">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in Model.Items.OrderByDescending(x => x.Date))
+                                {
+                                    <tr>
+                                        <td>@i.Date.ToString("yyyy-MM-dd")</td>
+                                        <td class="fw-semibold">@i.Source</td>
+                                        <td>@i.Category</td>
+                                        <td class="text-end fw-bold">Rs. @i.Amount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

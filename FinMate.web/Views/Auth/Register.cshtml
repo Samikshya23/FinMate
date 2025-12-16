@@ -1,0 +1,92 @@
+﻿@model FinMate.web.Models.RegisterRequest
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LandingLayout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="bg-white rounded-4 shadow-sm p-4 p-md-5">
+                <h2 class="fw-bold mb-1">Create your account</h2>
+                <p class="text-secondary mb-4">Register to start using FinMate.</p>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.Error</div>
+                }
+
+                <form asp-action="Register" method="post" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Username</label>
+                        <input asp-for="UserName" class="form-control form-control-lg" placeholder="Enter username" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email</label>
+                        <input asp-for="Email" class="form-control form-control-lg" placeholder="you@example.com" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Phone Number (10 digits)</label>
+                        <input asp-for="PhoneNumber"
+                               class="form-control form-control-lg"
+                               placeholder="98xxxxxxxx"
+                               maxlength="10"
+                               inputmode="numeric"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10);" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Password</label>
+                            <div class="input-group input-group-lg">
+                                <input asp-for="Password" class="form-control" id="regPass" placeholder="Min 8 characters" />
+                                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('regPass', this)">
+                                    👁
+                                </button>
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Confirm Password</label>
+                            <div class="input-group input-group-lg">
+                                <input asp-for="ConfirmPassword" class="form-control" id="regConfirm" placeholder="Re-type password" />
+                                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('regConfirm', this)">
+                                    👁
+                                </button>
+                            </div>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-brand w-100 mt-4">
+                        Create account
+                    </button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <span class="text-secondary">Already have an account?</span>
+                    <a asp-controller="Auth" asp-action="Login" class="fw-bold text-decoration-none">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Validation scripts -->
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            input.type = (input.type === "password") ? "text" : "password";
+        }
+    </script>
+}

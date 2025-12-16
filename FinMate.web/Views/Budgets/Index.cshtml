@@ -1,0 +1,92 @@
+﻿@model List<FinMate.web.Models.BudgetVm>
+@{
+    ViewData["Title"] = "Budgets";
+    var month = (string)(ViewBag.Month ?? DateTime.Now.ToString("yyyy-MM"));
+}
+
+<div class="page-head">
+    <h2>Budgets</h2>
+    <p>Set monthly limits and track spent/remaining.</p>
+</div>
+
+@if (TempData["ok"] != null)
+{
+    <div class="alert alert-success">@TempData["ok"]</div>
+}
+@if (TempData["err"] != null)
+{
+    <div class="alert alert-danger">@TempData["err"]</div>
+}
+
+<div class="card p-3 mb-3">
+    <form method="get" class="row g-2 align-items-end">
+        <div class="col-md-3">
+            <label class="form-label">Month</label>
+            <input type="month" class="form-control" name="month" value="@month" />
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">Load</button>
+        </div>
+    </form>
+</div>
+
+<div class="card p-3 mb-4">
+    <h5 class="mb-3">Add / Update Budget</h5>
+    <form method="post" asp-action="Save" class="row g-2">
+        <input type="hidden" name="Month" value="@month" />
+
+        <div class="col-md-4">
+            <label class="form-label">Category</label>
+            <input class="form-control" name="Category" placeholder="Food / Travel / Rent" required />
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Limit Amount</label>
+            <input class="form-control" name="LimitAmount" type="number" step="0.01" min="0" required />
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+            <button class="btn btn-success w-100">Save</button>
+        </div>
+    </form>
+</div>
+
+<div class="card p-3">
+    <h5 class="mb-3">Budgets for @month</h5>
+
+    @if (Model.Count == 0)
+    {
+        <p class="text-muted">No budgets found for this month.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th class="text-end">Limit</th>
+                        <th class="text-end">Spent</th>
+                        <th class="text-end">Remaining</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var b in Model)
+                    {
+                        var danger = b.Remaining < 0;
+                        <tr>
+                            <td><strong>@b.Category</strong></td>
+                            <td class="text-end">Rs. @b.LimitAmount.ToString("N2")</td>
+                            <td class="text-end">Rs. @b.Spent.ToString("N2")</td>
+                            <td class="text-end">
+                                <span class="@(danger ? "text-danger fw-bold" : "text-success fw-bold")">
+                                    Rs. @b.Remaining.ToString("N2")
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
